@@ -26,8 +26,8 @@ class Model:
                   'Mirror', 'Oven', 'Pillow', 'Porch', 'Refrigerator', 'Shower', 'Sink', 'Sofa bed', 'Stairs',
                   'Swimming pool', 'Television', 'Toilet', 'Towel', 'Tree house', 'Washing machine', 'Wine rack']
 
-    def predict(self, img_pth, num_amenities):
-        img = cv2.imread(img_pth)
+    def predict(self, input_img_pth, num_amenities, output_img_pth):
+        img = cv2.imread(input_img_pth)
         # cv2.imshow('image', img)
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
@@ -42,7 +42,7 @@ class Model:
         v = visualizer.draw_instance_predictions(outputs["instances"][:num_amenities].to("cpu"))
         output_img = v.get_image()[:, :, ::-1]
         #print(output_img)
-        cv2.imwrite('output.jpg', output_img)
+        cv2.imwrite(output_img_pth, output_img)
 
         return pred_classes
 
