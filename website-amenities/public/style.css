@@ -9,3 +9,7 @@ body {
 .roomLabel {
 	color: red;
 }
+
+.hidden {
+	display: none;
+}

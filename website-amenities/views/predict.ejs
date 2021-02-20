@@ -17,14 +17,22 @@
         </div>
         <div class="row align-items-start" id="prediction">
         	<div class="col-6 text-center mt-4"> 
-				<h3 class="mb-4">Here's your image:</h3> 
-				<img src="<%=img_url%>" class="text-center w-50" alt="">
+        		<div>
+					<h3 class="mb-4">Here's your image:</h3> 
+					<img id="inputImg" src="<%=img_url%>" class="text-center w-50" alt="">
+					<img id="outputImg" src="<%=output_url%>" class="text-center w-50 hidden" alt="">
+				</div>
+				<div>
+					<button id="imgToggler" class="btn btn-info mt-4">Show Predictions</button>
+				</div>
 			</div>
 			<div class="col-6 text-center mt-4"> 
 				<div>
 					<h3 class="mb-4">Here's what we found for the <span> <%=roomLabel%></span>:</h3> 
 					<% for (pred of preds) { %>
+					<div>
 						<h5 class="pred"><%=pred%></h5>
+					</div>
 					<% } %>
 				</div>
 				<div>
@@ -35,12 +43,24 @@
         </div>
 	</section>
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+
+    <script> 
+	    $('#imgToggler').click(function(){
+	    	$( "#inputImg" ).toggleClass( "hidden" );
+	    	$( "#outputImg" ).toggleClass( "hidden" );
+	    	if ($('#imgToggler').text()=='Show Predictions') {
+	    		$('#imgToggler').html("Hide Predictions");
+	    	}
+	    	else {
+	    		$('#imgToggler').html("Show Predictions");
+	    	}
+		});
+    </script>
 
 </body>
 </html>
