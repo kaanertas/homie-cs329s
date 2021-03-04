@@ -31,7 +31,7 @@ app.post('/predict', upload.single('image'), async (req, res) => {
 	if (req.body.room) roomLabel = req.body.room;
 	// const no_preds = req.body.no_preds
 	const b = {img_url}
-
+	
 	json = await fetch('http://127.0.0.1:5000/predict', {
     method: 'POST',
     body: JSON.stringify(b),
