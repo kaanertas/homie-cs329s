@@ -22,7 +22,7 @@ class Model:
         self.cfg.MODEL.WEIGHTS = "./retinanet_model_final.pth"
         self.predictor = DefaultPredictor(self.cfg)
         self.target_classes =  ['Bathtub', 'Bed', 'Billiard table', 'Ceiling fan', 'Coffeemaker', 'Couch', 'Countertop', 'Dishwasher',
-                  'Fireplace','Fountain', 'Gas stove', 'Jacuzzi', 'Kitchen & dining room table' 'Microwave oven',
+                  'Fireplace','Fountain', 'Gas stove', 'Jacuzzi', 'Kitchen & dining room table', 'Microwave oven',
                   'Mirror', 'Oven', 'Pillow', 'Porch', 'Refrigerator', 'Shower', 'Sink', 'Sofa bed', 'Stairs',
                   'Swimming pool', 'Television', 'Toilet', 'Towel', 'Tree house', 'Washing machine', 'Wine rack']
 
@@ -32,8 +32,15 @@ class Model:
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
         outputs = self.predictor(img)
-        predicted_class_nums = list(outputs["instances"][:num_amenities].pred_classes)
-        pred_classes = list(set([self.target_classes[idx] for idx in predicted_class_nums]))
+        formatted = zip(list(outputs["instances"][:num_amenities].pred_classes),list(outputs["instances"][:num_amenities].scores))
+        seen = set()
+        formatted_dedup = []
+        for c, score in formatted:
+            if c.numpy().item() not in seen:
+                formatted_dedup.append((c.numpy().item(),score))
+            seen.add(c.numpy().item())
+        pred_classes = [self.target_classes[c] for c,sc in formatted_dedup]
+        scores = [round(sc.numpy().item(),2) for c,sc in formatted_dedup]
         # print(outputs)
         visualizer = Visualizer(img_rgb=img[:, :, ::-1],
                                 metadata=MetadataCatalog.get(self.cfg.DATASETS.TEST[0]).set(thing_classes=self.target_classes),
@@ -44,7 +51,7 @@ class Model:
         #print(output_img)
         cv2.imwrite(output_img_pth, output_img)
 
-        return pred_classes
+        return pred_classes, scores
 
 
 # TARGET_CLASSES = ['Bathtub', 'Bed', 'Billiard table', 'Ceiling fan', 'Coffeemaker', 'Couch', 'Countertop', 'Dishwasher',

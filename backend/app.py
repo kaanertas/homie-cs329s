@@ -18,19 +18,34 @@ def predict():
 
 	#request: url, no of preds
 
-	img_url = request.json['img_url']
-	file_name = 'input.jpg'
-	urllib.request.urlretrieve(img_url, file_name)
-	# no_preds = request.json['no_preds']
-	output = m.predict(file_name, 7, 'output.jpg')
-	#print(output)
-	# boxes, confidence, predicted_classes = output
-	predicted_classes = output
+	img_urls = request.json['img_urls']
+	output_urls = []
+	preds = []
+	scores = []
 
-	upload_res = cloudinary.uploader.upload("output.jpg")
-	output_url = upload_res['url']
+	for img_url in img_urls:
 
-	return jsonify(preds=predicted_classes,img_url=img_url,output_url=output_url)
+		file_name = 'input.jpg'
+		urllib.request.urlretrieve(img_url, file_name)
+		# no_preds = request.json['no_preds']
+		output = m.predict(file_name, 7, 'output.jpg')
+		#print(output)
+		# boxes, confidence, predicted_classes = output
+		predicted_classes, confidence_scores = output
+
+		upload_res = cloudinary.uploader.upload("output.jpg")
+
+		preds.append(predicted_classes)
+		scores.append(confidence_scores)
+		output_urls.append(upload_res['url'])
+
+	preds_consolidated = []
+	for pred in preds:
+		preds_consolidated += pred
+
+	preds_consolidated = list(set(preds_consolidated))
+
+	return jsonify(preds=preds,scores=scores,img_urls=img_urls,output_urls=output_urls,preds_consolidated=preds_consolidated)
 
 if __name__ == "__main__":
 	m = Model()

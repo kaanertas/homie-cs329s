@@ -24,14 +24,18 @@ app.listen(3000, () => {
     console.log(`Serving on port 3000`)
 })
 
-app.post('/predict', upload.single('image'), async (req, res) => {
+app.post('/predict', upload.array('image'), async (req, res) => {
 	
-	const img_url = req.file.path
+	var img_urls = [];
+	req.files.forEach(function(item) {
+	    img_urls.push(item.path);
+	});
+
 	var roomLabel = "room"
 	if (req.body.room) roomLabel = req.body.room;
 	// const no_preds = req.body.no_preds
-	const b = {img_url}
-
+	const b = {img_urls}
+	
 	json = await fetch('http://127.0.0.1:5000/predict', {
     method: 'POST',
     body: JSON.stringify(b),

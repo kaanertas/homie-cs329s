@@ -19,8 +19,8 @@
         	<div class="col-6 text-center mt-4"> 
         		<div>
 					<h3 class="mb-4">Here's your image:</h3> 
-					<img id="inputImg" src="<%=img_url%>" class="text-center w-50" alt="">
-					<img id="outputImg" src="<%=output_url%>" class="text-center w-50 hidden" alt="">
+					<img id="inputImg" src="<%=img_urls[0]%>" class="text-center w-50" alt="">
+					<img id="outputImg" src="<%=output_urls[0]%>" class="text-center w-50 hidden" alt="">
 				</div>
 				<div>
 					<button id="imgToggler" class="btn btn-info mt-4">Show Predictions</button>
@@ -29,9 +29,9 @@
 			<div class="col-6 text-center mt-4"> 
 				<div>
 					<h3 class="mb-4">Here's what we found for the <span> <%=roomLabel%></span>:</h3> 
-					<% for (pred of preds) { %>
+					<% for (var i = 0; i < preds[0].length; i++) { %>
 					<div>
-						<h5 class="pred"><%=pred%></h5>
+						<h5 class="pred"><%=preds[0][i]%></h5>
 					</div>
 					<% } %>
 				</div>
