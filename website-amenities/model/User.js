@@ -13,10 +13,7 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  createdAt: {
-    type: Date,
-    default: Date.now()
-  }
+  properties: [{type:mongoose.Schema.Types.ObjectId, ref: 'Property'}]
 });
 
 module.exports = mongoose.model("user", UserSchema);

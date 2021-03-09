@@ -4,6 +4,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 const bodyParser = require("body-parser");
 const user = require("./routes/user");
+const property = require("./routes/property");
 const InitiateMongoServer = require("./config/db");
 
 InitiateMongoServer();
@@ -23,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.render('home-new')
+    res.render('home')
 });
 
 app.listen(3000, () => {
@@ -31,6 +32,15 @@ app.listen(3000, () => {
 })
 
 app.use("/user", user);
+app.use("/property", property);
+
+
+
+
+
+
+
+
 
 app.post('/predict', upload.array('image'), async (req, res) => {
 

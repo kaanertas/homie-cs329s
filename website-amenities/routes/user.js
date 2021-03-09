@@ -14,7 +14,7 @@ const User = require("../model/User");
  */
 
 router.post(
-    "/signup",
+    "/register",
     [
         check("username", "Please Enter a Valid Username")
         .not()
@@ -76,6 +76,7 @@ router.post(
                     });
                 }
             );
+            res.redirect('/user/'+user._id+'/landing')
         } catch (err) {
             console.log(err.message);
             res.status(500).send("Error in Saving");
@@ -85,12 +86,12 @@ router.post(
 
 router.post(
   "/login",
-  [
-    check("email", "Please enter a valid email").isEmail(),
-    check("password", "Please enter a valid password").isLength({
-      min: 6
-    })
-  ],
+  // [
+  //   check("email", "Please enter a valid email").isEmail(),
+  //   check("password", "Please enter a valid password").isLength({
+  //     min: 6
+  //   })
+  // ],
   async (req, res) => {
     const errors = validationResult(req);
 
@@ -100,10 +101,10 @@ router.post(
       });
     }
 
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     try {
       let user = await User.findOne({
-        email
+        username
       });
       if (!user)
         return res.status(400).json({
@@ -136,8 +137,7 @@ router.post(
         }
       );
       //HERE WE CAN RETURN THE USER/ACCESS THE USER
-      console.log(user);
-      //render here
+      res.redirect('/user/'+user._id+'/landing')
     } catch (e) {
       console.error(e);
       res.status(500).json({
@@ -146,6 +146,30 @@ router.post(
     }
   }
 );
+
+router.get("/:userid/landing", async (req, res) => {
+
+    const {userid} = req.params;
+    try {
+      let user = await User.findOne({_id:userid}).populate('properties');
+      if (!user)
+        return res.status(400).json({
+          message: "User Not Exist"
+        });
+      res.render('user-landing',{user})
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({
+        message: "Server Error"
+      });
+    }
+  }
+);
+
+router.get("/logout", async (req, res) => {
+    res.render('home')
+})
+
 
 /**
  * @method - POST

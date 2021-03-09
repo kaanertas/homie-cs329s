@@ -11,9 +11,9 @@
 	<nav class="navbar navbar-dark justify-content-between">
 		<a class="navbar-brand">Amenity Detection</a>
 		<span class="navbar-text ml-auto mr-4 text-light">
-			Welcome home, kaaanertas
+			Welcome home, <%=user.username%>
 		</span>
-		<button class="btn btn-danger my-2 my-sm-0" type="submit" href="/">Logout</button>
+		<a class="button btn btn-danger my-2 my-sm-0" href="/user/logout">Logout</a>
 	</nav>
 
 	<section class="container-fluid px-0 py-5" id="intro"> 
@@ -24,7 +24,7 @@
 						<h3>Create New Property</h3> 
 						<p> Upload photos for a property, and we'll aggregate all the amenities from your photos to get you a consolidated list.</p>
 						<hr>
-						<form action="/new" method="POST" enctype="multipart/form-data">
+						<form action=<%='/property/create/'+user._id%> method="POST" enctype="multipart/form-data">
 							<div class="mb-3">
 								<div class="form-group">
 									<input type="text" class="form-control" id="property-name" name="property-name" aria-describedby="" placeholder="Enter property name">
