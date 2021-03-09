@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.render('home')
+    res.render('home-new')
 });
 
 app.listen(3000, () => {
