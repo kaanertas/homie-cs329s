@@ -124,7 +124,7 @@ router.post(
 
       jwt.sign(
         payload,
-        "secret",
+        "randomString",
         {
           expiresIn: 3600
         },
@@ -135,6 +135,9 @@ router.post(
           });
         }
       );
+      //HERE WE CAN RETURN THE USER/ACCESS THE USER
+      console.log(user);
+      //render here
     } catch (e) {
       console.error(e);
       res.status(500).json({

@@ -26,13 +26,13 @@
 					<article class="card-body bg-light">
 						<h4 class="card-title text-center mb-2 mt-1 text-dark">Sign in</h4>
 						<hr>
-						<form method="POST" action="/user">
+						<form method="POST" action="/user/login">
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text"> <i class="fa fa-user"></i> </span>
 									</div>
-									<input name="" class="form-control" placeholder="username" type="text">
+									<input name="email" class="form-control" placeholder="username@gmail.com" type="text">
 								</div> <!-- input-group.// -->
 							</div> <!-- form-group// -->
 							<div class="form-group">
@@ -40,7 +40,7 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 									</div>
-									<input class="form-control" placeholder="*******" type="password">
+									<input name="password" class="form-control" placeholder="*******" type="password">
 								</div> <!-- input-group.// -->
 							</div> <!-- form-group// -->
 							<div class="form-group">
@@ -61,17 +61,17 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+										<span class="input-group-text"> <i class="fa fa-user"></i> </span>
 									</div>
-									<input name= "password" class="form-control" placeholder="*******" type="password">
+									<input name= "email" class="form-control" placeholder="username@email.com" type="email">
 								</div> <!-- input-group.// -->
 							</div> <!-- form-group// -->
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text"> <i class="fa fa-user"></i> </span>
+										<span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 									</div>
-									<input name= "email" class="form-control" placeholder="username@email.com" type="email">
+									<input name= "password" class="form-control" placeholder="*******" type="password">
 								</div> <!-- input-group.// -->
 							</div> <!-- form-group// -->
 							<div class="form-group">
