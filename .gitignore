@@ -131,3 +131,4 @@ dmypy.json
 *.pth
 backend/retinanet_model_final_config.yaml
 .idea/
+website-amenities/node_modules/
