@@ -13,3 +13,18 @@ body {
 .hidden {
 	display: none;
 }
+
+article {
+	color: black;
+}
+
+img {
+	max-width:100%;
+	max-height: 100%
+}
+
+ul.no-bullets {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
