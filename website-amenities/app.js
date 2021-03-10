@@ -3,8 +3,10 @@ const ejsMate = require('ejs-mate');
 const path = require('path');
 const fetch = require('node-fetch');
 const bodyParser = require("body-parser");
-const user = require("./routes/user");
+require("./model/Property");
+require("./model/User");
 const property = require("./routes/property");
+const user = require("./routes/user");
 const InitiateMongoServer = require("./config/db");
 
 InitiateMongoServer();
@@ -36,37 +38,26 @@ app.use("/property", property);
 
 
 
-
-
-
-
-
-
-app.post('/predict', upload.array('image'), async (req, res) => {
-
-	var img_urls = [];
-	req.files.forEach(function(item) {
-	    img_urls.push(item.path);
-	});
-
-	var roomLabel = "room"
-	if (req.body.room) roomLabel = req.body.room;
-	// const no_preds = req.body.no_preds
-	const b = {img_urls}
-	
-	json = await fetch('http://127.0.0.1:5000/predict', {
-    method: 'POST',
-    body: JSON.stringify(b),
-    headers: { 'Content-Type': 'application/json' }
-	}).then(res => res.json())
-  	.catch(err => console.log(err));
-
-  	res.render('predict', {...json, roomLabel});
-    
-});
-
-//app.post('/user', async (req, res) => {
-//    console.log(req);
+//app.post('/predict', upload.array('image'), async (req, res) => {
+//
+//	var img_urls = [];
+//	req.files.forEach(function(item) {
+//	    img_urls.push(item.path);
+//	});
+//
+//	var roomLabel = "room"
+//	if (req.body.room) roomLabel = req.body.room;
+//	// const no_preds = req.body.no_preds
+//	const b = {img_urls}
+//
+//	json = await fetch('http://127.0.0.1:5000/predict', {
+//    method: 'POST',
+//    body: JSON.stringify(b),
+//    headers: { 'Content-Type': 'application/json' }
+//	}).then(res => res.json())
+//  	.catch(err => console.log(err));
+//
+//  	res.render('predict', {...json, roomLabel});
 //
 //});
 

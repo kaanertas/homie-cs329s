@@ -17,7 +17,7 @@ app = Flask(__name__)
 def predict():
 
 	#request: url, no of preds
-
+	print('IN THE PREDICT FUNCTION!')
 	img_urls = request.json['img_urls']
 	output_urls = []
 	preds = []

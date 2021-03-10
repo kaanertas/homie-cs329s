@@ -11,7 +11,7 @@
 	<nav class="navbar navbar-dark justify-content-between">
 		<a class="navbar-brand">Amenity Detection</a>
 		<span class="navbar-text ml-auto mr-4 text-light">
-			Welcome home, <%=user.username%>
+			Welcome home
 		</span>
 		<a class="button btn btn-danger my-2 my-sm-0" href="/user/logout">Logout</a>
 	</nav>
@@ -21,24 +21,14 @@
 			<div class="col-8 text-center"> 
 				
 				<div class="mb-4 text-center">
-					<h2>Property Name</h2>
+					<h2><%=propertyName%></h2>
 				</div>
 				<div class="row align-items-center">
-					<div class="col-4 text-center mb-4"> 
-						<img src="https://upload.wikimedia.org/wikipedia/commons/9/92/95apple.jpeg">
-					</div>
-					<div class="col-4 text-center mb-4"> 
-						<img src="https://upload.wikimedia.org/wikipedia/commons/9/92/95apple.jpeg">
-					</div>
-					<div class="col-4 text-center mb-4"> 
-						<img src="https://upload.wikimedia.org/wikipedia/commons/9/92/95apple.jpeg">
-					</div>
-					<div class="col-4 text-center mb-4"> 
-						<img src="https://upload.wikimedia.org/wikipedia/commons/9/92/95apple.jpeg">
-					</div>
-					<div class="col-4 text-center mb-4"> 
-						<img src="https://upload.wikimedia.org/wikipedia/commons/9/92/95apple.jpeg">
-					</div>
+				    <% for (var i = 0; i < img_urls.length; i++) { %>
+                        <div>
+                            <img id="inputImg" src="<%=img_urls[i]%>" class="text-center w-50" alt="">
+                        </div>
+					<% } %>
 				</div>
 				<div class="mt-4 text-center">
 					<button class="btn btn-primary">Back to Property List</button>

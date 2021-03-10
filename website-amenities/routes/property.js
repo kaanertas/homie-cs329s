@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const auth = require("../middleware/auth");
+const fetch = require("node-fetch");
 
 const Property = require("../model/Property");
 const User = require("../model/User");
@@ -42,6 +43,7 @@ const upload = multer({ storage });
 
       // get property id from url
       const property_id = req.params.propertyid
+      console.log("Inside prop view")
       property = await Property.findOne(property_id)
 
       res.render('property-view', {property});
@@ -63,27 +65,26 @@ router.post(
     ],
 
     async (req, res) => {
+        const propertyName = req.body['property-name'];
 
-      const propertyName = req.body.propertyName;
-
-      var img_urls = [];
-      req.files.forEach(function(item) {
+        var img_urls = [];
+        req.files.forEach(function(item) {
         img_urls.push(item.path);
-      });
+        });
 
     
-      const d = {img_urls}
-      
-      json = await fetch('http://127.0.0.1:5000/predict', {
+        const d = {img_urls}
+
+        json = await fetch('http://127.0.0.1:5000/predict', {
         method: 'POST',
         body: JSON.stringify(d),
         headers: { 'Content-Type': 'application/json' }
-      }).then(res => res.json())
+        }).then(res => res.json())
         .catch(err => console.log(err));
 
-      const {preds,scores,output_urls,preds_consolidated} = json
+        const {preds,scores,output_urls, preds_consolidated} = json
 
-      property = new Property({
+        property = new Property({
                 name: propertyName,
                 photo_urls:img_urls,
                 labeled_photo_urls:output_urls,
@@ -91,20 +92,29 @@ router.post(
                 labels: preds_consolidated,
                 });
 
-      await property.save();
-
-      // GET USERNAME
-      // PUT PROPERTY IN USER'S LIST
-      let user = await User.findOne({username});
-      await user.properties.push(property);
-      await user.save();
-
-      res.render('property-view', json);
+        await property.save();
+        // GET USERNAME
+        // PUT PROPERTY IN USER'S LIST
+        const {userid} = req.params;
+        let user = await User.findOne({_id:userid});
+        await user.properties.push(property);
+        await user.save();
+        console.log(user)
+        res.render('property-view', {...json, propertyName});
   }
 )
 
 router.post("/:propertyid/update", async (req, res) => {
-      // TODO
+    console.log("Inside update")
+    res.render('property-view', {property});
+
+  }
+)
+
+router.post("/:propertyid/update", async (req, res) => {
+    console.log("Inside update")
+    res.render('property-view', {property});
+
   }
 )
 

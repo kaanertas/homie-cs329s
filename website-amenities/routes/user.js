@@ -136,7 +136,6 @@ router.post(
           });
         }
       );
-      //HERE WE CAN RETURN THE USER/ACCESS THE USER
       res.redirect('/user/'+user._id+'/landing')
     } catch (e) {
       console.error(e);
