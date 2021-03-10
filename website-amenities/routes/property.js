@@ -40,16 +40,20 @@ const upload = multer({ storage });
  })
 
  router.get("/:propertyid/view", async (req, res) => {
-
-      // get property id from url
-      const property_id = req.params.propertyid
-      console.log("Inside prop view")
-      property = await Property.findOne(property_id)
-
-      res.render('property-view', {property});
-
-  }
-)
+    // get property id from url
+    const property_id = req.params.propertyid
+    try {
+        let property = await Property.findOne({_id:property_id})
+        let user = await User.findOne( { 'properties': property_id } );
+        let user_id = user._id
+        if (!user)
+            return res.status(400).json({ message: "User Not Exist"});
+        res.render('property-view', {property, user_id});
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: "Server Error"});
+    }
+})
 
 router.post(
 
@@ -96,11 +100,11 @@ router.post(
         // GET USERNAME
         // PUT PROPERTY IN USER'S LIST
         const {userid} = req.params;
+        const user_id = userid
         let user = await User.findOne({_id:userid});
         await user.properties.push(property);
         await user.save();
-        console.log(user)
-        res.render('property-view', {...json, propertyName});
+        res.render('property-view', {...json, propertyName, user_id});
   }
 )
 
@@ -111,11 +115,5 @@ router.post("/:propertyid/update", async (req, res) => {
   }
 )
 
-router.post("/:propertyid/update", async (req, res) => {
-    console.log("Inside update")
-    res.render('property-view', {property});
-
-  }
-)
 
 module.exports = router;

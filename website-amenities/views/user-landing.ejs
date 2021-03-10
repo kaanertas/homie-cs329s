@@ -30,7 +30,7 @@
 						<% } %>
 						<% for (var i = 0; i < user.properties.length; i++) { %>
 						<div>
-							<a href="/" class="text-left"><%=user.properties[i].name%></a>
+							<a href="/property/<%=user.properties[i]._id%>/view" class="text-left"><%=user.properties[i].name%></a>
 						</div>
 						<% } %>
 						<a class="button btn btn-success mt-4" href=<%='/property/new/'+user._id%>  >New Property</a>
