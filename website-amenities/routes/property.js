@@ -14,11 +14,6 @@ const { storage } = require('../cloudinary');
 const upload = multer({ storage });
 
 
-/**
- * @method - POST
- * @param - /signup
- * @description - User SignUp
- */
 
  router.get('/new/:userid', async (req, res) => {
 
@@ -43,12 +38,12 @@ const upload = multer({ storage });
     // get property id from url
     const property_id = req.params.propertyid
     try {
-        let property = await Property.findOne({_id:property_id})
-        let user = await User.findOne( { 'properties': property_id } );
-        let user_id = user._id
+        let property = await Property.findOne({_id:property_id}).populate('user')
+        // let user = await User.findOne( { 'properties': property_id } );
+        let user = property.user
         if (!user)
             return res.status(400).json({ message: "User Not Exist"});
-        res.render('property-view', {property, user_id});
+        res.render('property-view', {property, user});
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Server Error"});
@@ -69,6 +64,14 @@ router.post(
     ],
 
     async (req, res) => {
+
+        const {userid} = req.params;
+        const user_id = userid
+        let user = await User.findOne({_id:userid});
+        if (!user)
+          return res.status(400).json({
+            message: "User Not Exist"
+        });
         const propertyName = req.body['property-name'];
 
         var img_urls = [];
@@ -76,7 +79,6 @@ router.post(
         img_urls.push(item.path);
         });
 
-    
         const d = {img_urls}
 
         json = await fetch('http://127.0.0.1:5000/predict', {
@@ -90,6 +92,7 @@ router.post(
 
         property = new Property({
                 name: propertyName,
+                user: user,
                 photo_urls:img_urls,
                 labeled_photo_urls:output_urls,
                 model_pred_labels: preds_consolidated,
@@ -97,14 +100,9 @@ router.post(
                 });
 
         await property.save();
-        // GET USERNAME
-        // PUT PROPERTY IN USER'S LIST
-        const {userid} = req.params;
-        const user_id = userid
-        let user = await User.findOne({_id:userid});
         await user.properties.push(property);
         await user.save();
-        res.render('property-view', {...json, propertyName, user_id});
+        res.redirect('/property/'+property._id+'/view');
   }
 )
 

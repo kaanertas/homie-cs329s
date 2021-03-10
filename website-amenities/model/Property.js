@@ -5,6 +5,11 @@ const PropertySchema = mongoose.Schema({
     type: String,
     required: true
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'user',
+    required: true
+  },
   photo_urls: {
     type: [String],
     required: true
