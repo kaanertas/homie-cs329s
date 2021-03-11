@@ -8,6 +8,8 @@ const fetch = require("node-fetch");
 
 const Property = require("../model/Property");
 const User = require("../model/User");
+const Misclassified = require("../model/Misclassified");
+const classes = require("../public/classes")
 
 const multer = require('multer');
 const { storage } = require('../cloudinary');
@@ -43,7 +45,7 @@ const upload = multer({ storage });
         let user = property.user
         if (!user)
             return res.status(400).json({ message: "User Not Exist"});
-        res.render('property-view', {property, user});
+        res.render('property-view', {property, user, classes});
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Server Error"});
@@ -51,10 +53,6 @@ const upload = multer({ storage });
 })
 
 router.post(
-
-  // TODO
-
-  
     "/create/:userid",
     [
         check("property-name", "Please Enter a Valid Property Name")
@@ -107,8 +105,44 @@ router.post(
 )
 
 router.post("/:propertyid/update", async (req, res) => {
-    console.log("Inside update")
-    res.render('property-view', {property});
+    
+    property_id = req.params.propertyid
+
+    let property = await Property.findOne({_id:property_id});
+        if (!property)
+          return res.status(400).json({
+            message: "User Not Exist"
+        });
+
+    model_pred_labels = property.model_pred_labels
+    updated_labels = []
+    false_pos = []
+    false_neg = []
+    for (let i=0; i<classes.length; i++) {
+        if (req.body['class_'+i]) {
+            updated_labels.push(classes[i])
+            if (!model_pred_labels.includes(classes[i])) {
+                false_neg.push(classes[i])
+            }
+        }
+        else if (model_pred_labels.includes(classes[i])) {
+            false_pos.push(classes[i])
+        }
+    }
+    console.log(false_pos)
+    console.log(false_neg)
+
+    property.labels = updated_labels;
+    await property.save();
+
+    misclassified = new Misclassified({
+                false_positives: false_pos,
+                flase_negatives: false_neg,
+                property: property,
+                });
+    await misclassified.save();
+
+    res.redirect('/property/'+property_id+'/view')
 
   }
 )

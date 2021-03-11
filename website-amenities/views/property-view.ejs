@@ -18,7 +18,7 @@
 
 	<section class="container-fluid px-5 py-5" id="intro"> 
 		<div class="row align-items-center">
-			<div class="col-8 text-center"> 
+			<div class="col-8 text-center mb-auto"> 
 				
 				<div class="mb-4 text-center">
 					<h2><%=property['name']%></h2>
@@ -40,28 +40,37 @@
 			</div>
 			<div class="col-3 offset-1 text-center"> 
 				<div class="mb-4 text-left">
-					<form action="/" method="POST">
+					<form action=<%='/property/'+property._id+'/update'%> method="POST">
 						<!-- list all the ones (alphabetically) that were found in the db with checked attr-->
+						<br>
+						<br>
+						<div class="mb-4 text-center">
+							<p>Note: We've pre-checked all the amenities that our model found. If something doesn't look right, just check/uncheck the boxes as necessary!</p>
+						</div>
 						<div class="mb-4 text-left">
 							<h2>Found Labels</h2>
 						</div>
-                        <% for (var i = 0; i < property['labels'].length; i++) { %>
-                            <div>
-                                <input type="checkbox" id=<%=property['labels'][i]%> name=<%=property['labels'][i]%> value=<%=property['labels'][i]%> checked>
-						        <label for="vehicle1"> <%=property['labels'][i]%></label><br>
-                            </div>
+                        <% for (var i = 0; i < classes.length; i++) { %>
+                        	<% if (property.labels.includes(classes[i])) { %>
+	                            <div>
+	                                <input type="checkbox" name=<%='class_'+i%> value=<%='class_'+i%> checked>
+							        <label for=<%='class_'+i%>> <%=classes[i]%></label><br>
+	                            </div>
+                            <% } %>
 					    <% } %>
 						<br>
 						<!-- list all the ones (alphabetically) that were NOT found in the db-->
 						<div class="mb-4 text-left">
 							<h2>Other Labels</h2>
 						</div>
-						<input type="checkbox" id="Hair Dryer" name="Hair Dryer" value="Hair Dryer">
-						<label for="Hair Dryer"> Hair Dryer</label><br>
-						<input type="checkbox" id="Fridge" name="Fridge" value="Fridge">
-						<label for="Fridge"> Fridge</label><br>
-						<input type="checkbox" id="Shower" name="Shower" value="Shower">
-						<label for="Shower"> Shower</label><br>
+						<% for (var i = 0; i < classes.length; i++) { %>
+                        	<% if (!property.labels.includes(classes[i])) { %>
+	                            <div>
+	                                <input type="checkbox" name=<%='class_'+i%> value=<%='class_'+i%>>
+							        <label for=<%='class_'+i%>> <%=classes[i]%></label><br>
+	                            </div>
+                            <% } %>
+					    <% } %>
 						<br>
 
 						<input type="submit" class="btn btn-warning" value="Update">
