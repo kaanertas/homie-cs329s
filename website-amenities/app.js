@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
     res.render('home')
 });
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`Serving on port ${port}`)
 })
 
