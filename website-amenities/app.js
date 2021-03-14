@@ -13,6 +13,8 @@ InitiateMongoServer();
 
 const app = express();
 
+const port = process.env.PORT || 3000;
+
 const multer = require('multer');
 const { storage } = require('./cloudinary');
 const upload = multer({ storage });
@@ -29,35 +31,10 @@ app.get('/', (req, res) => {
     res.render('home')
 });
 
-app.listen(3000, () => {
-    console.log(`Serving on port 3000`)
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`)
 })
 
 app.use("/user", user);
 app.use("/property", property);
-
-
-
-//app.post('/predict', upload.array('image'), async (req, res) => {
-//
-//	var img_urls = [];
-//	req.files.forEach(function(item) {
-//	    img_urls.push(item.path);
-//	});
-//
-//	var roomLabel = "room"
-//	if (req.body.room) roomLabel = req.body.room;
-//	// const no_preds = req.body.no_preds
-//	const b = {img_urls}
-//
-//	json = await fetch('http://127.0.0.1:5000/predict', {
-//    method: 'POST',
-//    body: JSON.stringify(b),
-//    headers: { 'Content-Type': 'application/json' }
-//	}).then(res => res.json())
-//  	.catch(err => console.log(err));
-//
-//  	res.render('predict', {...json, roomLabel});
-//
-//});
 

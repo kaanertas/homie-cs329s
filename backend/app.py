@@ -17,7 +17,7 @@ app = Flask(__name__)
 def predict():
 
 	#request: url, no of preds
-	print('IN THE PREDICT FUNCTION!')
+	# print('IN THE PREDICT FUNCTION!')
 	img_urls = request.json['img_urls']
 	output_urls = []
 	preds = []
@@ -47,6 +47,9 @@ def predict():
 
 	return jsonify(preds=preds,scores=scores,img_urls=img_urls,output_urls=output_urls,preds_consolidated=preds_consolidated)
 
-if __name__ == "__main__":
-	m = Model()
-	app.run(debug=True)
+# if __name__ == "__main__":
+# 	m = Model()
+# 	app.run(debug=True)
+
+m = Model()
+# app.run(debug=True)
