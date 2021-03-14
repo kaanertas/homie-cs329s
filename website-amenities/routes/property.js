@@ -79,7 +79,7 @@ router.post(
 
         const d = {img_urls}
 
-        json = await fetch('http://127.0.0.1:5000/predict', {
+        json = await fetch('http://172.17.0.2:5000/predict', {
         method: 'POST',
         body: JSON.stringify(d),
         headers: { 'Content-Type': 'application/json' }

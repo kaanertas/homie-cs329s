@@ -15,7 +15,6 @@ app = Flask(__name__)
 
 @app.route('/predict',methods=['POST'])
 def predict():
-
 	#request: url, no of preds
 	print('IN THE PREDICT FUNCTION!')
 	img_urls = request.json['img_urls']
@@ -44,9 +43,13 @@ def predict():
 		preds_consolidated += pred
 
 	preds_consolidated = list(set(preds_consolidated))
+	print("Here is list of preds: ", preds_consolidated)
 
 	return jsonify(preds=preds,scores=scores,img_urls=img_urls,output_urls=output_urls,preds_consolidated=preds_consolidated)
 
 if __name__ == "__main__":
 	m = Model()
-	app.run(debug=True)
+	app.run('0.0.0.0', 5000, debug=True)
+
+# m = Model()
+# # app.run(debug=True)
