@@ -28,7 +28,7 @@ def predict():
 		file_name = 'input.jpg'
 		urllib.request.urlretrieve(img_url, file_name)
 		# no_preds = request.json['no_preds']
-		output = m.predict(file_name, 7, 'output.jpg')
+		output = m.predict(file_name, 0.2, 'output.jpg')
 		#print(output)
 		# boxes, confidence, predicted_classes = output
 		predicted_classes, confidence_scores = output
