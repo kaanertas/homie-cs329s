@@ -1,22 +1,27 @@
 version: "2"
 services:
   app:
-    container_name: app
+    build:
+        dockerfile: Dockerfile
+        context: ./website-amenities
     restart: always
-    build: .
     ports:
       - "3000:3000"
     links:
       - mongo
   mongo:
-    container_name: mongo
     image: mongo
     volumes:
       - ./data:/data/db
     ports:
       - "27017:27017"
   backend:
-    container_name: backend
-    image: backend
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
     ports:
       - "5000:5000"
+networks:
+    default:
+        external:
+          name: cs329s-project_default
