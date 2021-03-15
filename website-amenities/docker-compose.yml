@@ -16,9 +16,7 @@ services:
     ports:
       - "27017:27017"
   backend:
-    container_name: backend_prints
-    image: backend_prints
-    environment:
-      FLASK_DEBUG: 1
+    container_name: backend
+    image: backend
     ports:
       - "5000:5000"

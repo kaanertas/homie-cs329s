@@ -6,5 +6,4 @@ RUN pip install torch==1.8 torchvision==0.9 -f https://download.pytorch.org/whl/
 RUN pip install 'git+https://github.com/facebookresearch/detectron2' --no-cache-dir
 EXPOSE 3000
 COPY . /app
-#CMD ["python", "-m", "flask", "run", "--host=0.0.0.0"]
 CMD ["python", "app.py"]
