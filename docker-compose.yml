@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 services:
   app:
     build:
@@ -7,21 +7,32 @@ services:
     restart: always
     ports:
       - "3000:3000"
-    links:
+    depends_on:
       - mongo
+    networks:
+      amenities-app:
+          ipv4_address: "172.20.0.4"
   mongo:
     image: mongo
     volumes:
       - ./data:/data/db
     ports:
       - "27017:27017"
+    networks:
+      amenities-app:
+        ipv4_address: "172.20.0.3"
   backend:
     build:
       dockerfile: Dockerfile
       context: ./backend
     ports:
       - "5000:5000"
+    networks:
+      amenities-app:
+        ipv4_address: "172.20.0.2"
 networks:
-    default:
-        external:
-          name: cs329s-project_default
+    amenities-app:
+      ipam:
+        config:
+          - subnet: "172.20.0.0/16"
+      driver: bridge
