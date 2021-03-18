@@ -15,7 +15,7 @@ from detectron2.utils.logger import setup_logger
 
 setup_logger()
 
-connection_string = 'mongodb+srv://max:max_is_a_b3ast@cs329s.gefiw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+connection_string = 'YOUR_MONGO_URI_HERE'
 
 str_to_id = {"Swimming pool":                 23,
 "Bed":                            1,
