@@ -11,3 +11,4 @@ https://github.com/facebookresearch/detectron2
 https://www.digitalocean.com/community/tutorials/how-to-integrate-mongodb-with-your-node-application
 https://www.mrdbourke.com/42days/
 https://colab.research.google.com/drive/1BRiFBC06OmWNkH4VpPl8Sf7IT21w7vXr
+
