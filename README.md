@@ -7,8 +7,8 @@ Over the last half-decade, the market for vacation rentals has largely centraliz
 Homie is a platform that fulfills this problem. With a few clicks, users can upload all of the pictures within their home, and we will automatically generate a listing of all of the amenities.  If users have multiple properties, they can manage the amenities within each property and easily export the amenities for each one to the popular vacation rental websites.  With Homie, the time spent going through each room in each property is cut exponentially. You only need to take pictures of each room once and upload them to our website, and we will keep track of all of that information for you.
 
 ### Sources
-https://github.com/facebookresearch/detectron2 \\
-https://www.digitalocean.com/community/tutorials/how-to-integrate-mongodb-with-your-node-application \\
-https://www.mrdbourke.com/42days/ \\
-https://colab.research.google.com/drive/1BRiFBC06OmWNkH4VpPl8Sf7IT21w7vXr \\
+https://github.com/facebookresearch/detectron2 <br />
+https://www.digitalocean.com/community/tutorials/how-to-integrate-mongodb-with-your-node-application <br />
+https://www.mrdbourke.com/42days/ <br />
+https://colab.research.google.com/drive/1BRiFBC06OmWNkH4VpPl8Sf7IT21w7vXr <br />
 
