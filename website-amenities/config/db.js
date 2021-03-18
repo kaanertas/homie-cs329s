@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const MONGOURI = "mongodb+srv://pujan:pujanpatel@cs329s.gefiw.mongodb.net/cs329s?retryWrites=true&w=majority";
+const MONGOURI = "YOUR_MONGO_URI_HERE";
 
 const options = {
   useNewUrlParser: true,
