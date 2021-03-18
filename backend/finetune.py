@@ -1,3 +1,6 @@
+"""
+This file is called to perform the online learning of the model.
+"""
 from pymongo import MongoClient
 from detectron2.config import get_cfg
 import numpy as np
